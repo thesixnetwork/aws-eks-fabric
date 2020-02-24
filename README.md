@@ -20,10 +20,20 @@ sudo mv ./kubectl /usr/local/bin/kubectl
 kubectl version --client
 ```
 
-3. In the instance terminal, execute `sudo apt install awscli -y` to install aws-cli
-4. Then execute `aws configure` to configure credentials. The credentials
+3. Install aws-cli
+
+```bash
+sudo apt update && sudo apt upgrade
+sudo apt install python3-pip
+pip3 install --upgrade pip
+sudo -H pip3 install awscli --upgrade --user
+aws --version
+```
+
+4. In the instance terminal, execute `sudo apt install awscli -y` to install aws-cli
+5. Then execute `aws configure` to configure credentials. The credentials
 you enter here are the AWS access key and secret key that belong to the AWS account you will use to create your EKS cluster.
-5. Go to home dir, then clone this repo:
+6. Go to home dir, then clone this repo:
 
 ```bash
 sudo su
@@ -32,7 +42,7 @@ git clone https://github.com/thesixnetwork/aws-eks-fabric.git
 cd aws-eks-fabric
 ```
 
-6. Run the bash script:
+7. Run the bash script:
 
 ```bash
 cd
