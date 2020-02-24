@@ -16,6 +16,7 @@
 # SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 region=ap-southeast-1
+keypairName=eks-fabric-dev
 privateNodegroup=true # set to true if you want eksctl to create the EKS worker nodes in private subnets
 
 
@@ -30,12 +31,12 @@ sudo mv /tmp/eksctl /usr/local/bin
 
 echo Create a keypair
 cd ~
-aws ec2 create-key-pair --key-name eks-fabric --region $region --query 'KeyMaterial' --output text > eks-fabric.pem
-chmod 400 eks-fabric.pem
+aws ec2 create-key-pair --key-name $keypairName --region $region --query 'KeyMaterial' --output text > ${keypairName}.pem
+chmod 400 ${keypairName}.pem
 sleep 10
 
 cd ~
-eksctl create cluster --node-private-networking --ssh-access --ssh-public-key eks-fabric --name eks-fabric --region $region --node-type m5.xlarge --node-volume-size 200 --kubeconfig=./kubeconfig.eks-fabric.yaml
+eksctl create cluster --node-private-networking --ssh-access --ssh-public-key $keypairName --name $keypairName $region --node-type m5.xlarge --node-volume-size 200 --kubeconfig=./kubeconfig.eks-fabric.yaml
 
 echo Check whether kubectl can access your Kubernetes cluster
 kubectl --kubeconfig=./kubeconfig.eks-fabric.yaml get nodes
@@ -91,7 +92,7 @@ if [ "$privateNodegroup" == "true" ]; then
     echo private DNS of EKS worker nodes, accessible from Bastion only since they are in a private subnet: $PrivateDnsNameEKSWorker
     cd ~
     # we need the keypair on the bastion, since we can only access the K8s worker nodes from the bastion
-    scp -i eks-fabric.pem -q ~/eks-fabric.pem  ec2-user@${PublicDnsNameBastion}:/home/ec2-user/eks-fabric.pem
+    scp -i ${keypairName}.pem -q ~/${keypairName}.pem  ec2-user@${PublicDnsNameBastion}:/home/ec2-user/${keypairName}.pem
 else
     PublicDnsNameEKSWorker=$(aws ec2 describe-instances --region $region --filters "Name=tag:Name,Values=eks-fabric-*-Node" "Name=instance-state-name,Values=running" | jq '.Reservations | .[] | .Instances | .[] | .PublicDnsName' | tr -d '"')
     echo public DNS of EKS worker nodes: $PublicDnsNameEKSWorker
@@ -99,6 +100,6 @@ fi
 
 echo Prepare the EC2 bastion for use by copying the kubeconfig and aws config and credentials files from Cloud9
 cd ~
-scp -i eks-fabric.pem -q ~/kubeconfig.eks-fabric.yaml  ec2-user@${PublicDnsNameBastion}:/home/ec2-user/kubeconfig.eks-fabric.yaml
-scp -i eks-fabric.pem -q ~/.aws/config  ec2-user@${PublicDnsNameBastion}:/home/ec2-user/config
-scp -i eks-fabric.pem -q ~/.aws/credentials  ec2-user@${PublicDnsNameBastion}:/home/ec2-user/credentials
+scp -i ${keypairName}.pem -q ~/kubeconfig.eks-fabric.yaml  ec2-user@${PublicDnsNameBastion}:/home/ec2-user/kubeconfig.eks-fabric.yaml
+scp -i ${keypairName}.pem -q ~/.aws/config  ec2-user@${PublicDnsNameBastion}:/home/ec2-user/config
+scp -i ${keypairName}.pem -q ~/.aws/credentials  ec2-user@${PublicDnsNameBastion}:/home/ec2-user/credentials
