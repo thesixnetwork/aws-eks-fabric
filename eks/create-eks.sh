@@ -80,16 +80,11 @@ cd ~/aws-eks-fabric/
 PublicDnsNameBastion=$(aws ec2 describe-instances --region $region --filters "Name=tag:Name,Values=EFS FileSystem Mounted Instance" "Name=instance-state-name,Values=running" | jq '.Reservations | .[] | .Instances | .[] | .PublicDnsName' | tr -d '"')
 echo public DNS of EC2 bastion host: $PublicDnsNameBastion
 
-if [ "$privateNodegroup" == "true" ]; then
-    PrivateDnsNameEKSWorker=$(aws ec2 describe-instances --region $region --filters "Name=tag:Name,Values=eks-fabric-*-Node" "Name=instance-state-name,Values=running" | jq '.Reservations | .[] | .Instances | .[] | .PrivateDnsName' | tr -d '"')
-    echo private DNS of EKS worker nodes, accessible from Bastion only since they are in a private subnet: $PrivateDnsNameEKSWorker
-    cd ~
-    # we need the keypair on the bastion, since we can only access the K8s worker nodes from the bastion
-    scp -i ${keypairName}.pem -q ~/${keypairName}.pem  ec2-user@${PublicDnsNameBastion}:/home/ec2-user/${keypairName}.pem
-else
-    PublicDnsNameEKSWorker=$(aws ec2 describe-instances --region $region --filters "Name=tag:Name,Values=eks-fabric-*-Node" "Name=instance-state-name,Values=running" | jq '.Reservations | .[] | .Instances | .[] | .PublicDnsName' | tr -d '"')
-    echo public DNS of EKS worker nodes: $PublicDnsNameEKSWorker
-fi
+PrivateDnsNameEKSWorker=$(aws ec2 describe-instances --region $region --filters "Name=tag:Name,Values=eks-fabric-*-Node" "Name=instance-state-name,Values=running" | jq '.Reservations | .[] | .Instances | .[] | .PrivateDnsName' | tr -d '"')
+echo private DNS of EKS worker nodes, accessible from Bastion only since they are in a private subnet: $PrivateDnsNameEKSWorker
+cd ~
+# we need the keypair on the bastion, since we can only access the K8s worker nodes from the bastion
+scp -i ${keypairName}.pem -q ~/${keypairName}.pem  ec2-user@${PublicDnsNameBastion}:/home/ec2-user/${keypairName}.pem
 
 echo Prepare the EC2 bastion for use by copying the kubeconfig and aws config and credentials files from Cloud9
 cd ~
