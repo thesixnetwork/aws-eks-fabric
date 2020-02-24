@@ -55,16 +55,6 @@ echo Getting VPC and Subnets from eksctl
 VPCID=$(eksctl get cluster --name=eks-fabric --region $region --verbose=0 --output=json | jq  '.[0].ResourcesVpcConfig.VpcId' | tr -d '"')
 echo -e "VPCID: $VPCID"
 
-# hmmm, this part needs a fix. SUBNETS is not a bash array, so NUMSUBNETS will not represent the correct number of subnets
-SUBNETS=$(eksctl get cluster --name=eks-fabric --region $region --verbose=0 --output=json | jq  '.[0].ResourcesVpcConfig.SubnetIds')
-NUMSUBNETS=${#SUBNETS[@]}
-echo -e "Checking that 6 subnets have been created. eksctl created ${NUMSUBNETS} subnets"
-
-if [ $NUMSUBNETS neq 6 ]; then
-    echo -e "6 subnets have not been created for this EKS cluster. There should be 3 public and 3 private. This script will fail if it continues. Stopping now. Investigate why eksctl did not create the required number of subnets"
-    exit 1
-fi
-
 SUBNETA=$(echo $SUBNETS | jq '.[0]' | tr -d '"')
 SUBNETB=$(echo $SUBNETS | jq '.[1]' | tr -d '"')
 SUBNETC=$(echo $SUBNETS | jq '.[2]' | tr -d '"')
@@ -75,7 +65,7 @@ cd ~/aws-eks-fabric
 git checkout efs/deploy-ec2.sh
 
 echo Update the ~/aws-eks-fabric/efs/deploy-ec2.sh config file
-sed -e "s/{VPCID}/${VPCID}/g" -e "s/{REGION}/${region}/g" -e "s/{SUBNETA}/${SUBNETA}/g" -e "s/{SUBNETB}/${SUBNETB}/g" -e "s/{SUBNETC}/${SUBNETC}/g" -i ~/aws-eks-fabric/efs/deploy-ec2.sh
+sed -e "s/{VPCID}/${VPCID}/g" -e "s/{REGION}/${region}/g" -e "s/{SUBNETA}/${SUBNETA}/g" -e "s/{SUBNETB}/${SUBNETB}/g" -e "s/{SUBNETC}/${SUBNETC}/g" -e "s/{KEYPAIRNAME}/${keypairName}/g" -i ~/aws-eks-fabric/efs/deploy-ec2.sh
 
 echo ~/aws-eks-fabric/efs/deploy-ec2.sh script has been updated with your parameters
 cat ~/aws-eks-fabric/efs/deploy-ec2.sh

@@ -21,7 +21,7 @@ vpcid={VPCID}
 subneta={SUBNETA}
 subnetb={SUBNETB}
 subnetc={SUBNETC}
-keypairname=eks-fabric
+keypairname={KEYPAIRNAME}
 volumename=dltefs
 mountpoint=opt/share
 
