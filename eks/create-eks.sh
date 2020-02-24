@@ -31,9 +31,11 @@ sudo mv /tmp/eksctl /usr/local/bin
 
 echo Create a keypair
 cd ~
-aws ec2 create-key-pair --key-name $keypairName --region $region --query 'KeyMaterial' --output text > ${keypairName}.pem
-chmod 400 ${keypairName}.pem
-sleep 10
+if [ ! -f ~/${keypairName}.pem ]; then
+  aws ec2 create-key-pair --key-name $keypairName --region $region --query 'KeyMaterial' --output text > ${keypairName}.pem
+  chmod 400 ~/${keypairName}.pem
+  sleep 10
+fi
 
 cd ~
 eksctl create cluster --node-private-networking --ssh-access --ssh-public-key $keypairName --name eks-fabric --region $region --node-type m5.xlarge --node-volume-size 200 --kubeconfig=./kubeconfig.eks-fabric.yaml
