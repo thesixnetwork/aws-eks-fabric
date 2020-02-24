@@ -36,7 +36,7 @@ chmod 400 ${keypairName}.pem
 sleep 10
 
 cd ~
-eksctl create cluster --node-private-networking --ssh-access --ssh-public-key $keypairName --name $keypairName $region --node-type m5.xlarge --node-volume-size 200 --kubeconfig=./kubeconfig.eks-fabric.yaml
+eksctl create cluster --node-private-networking --ssh-access --ssh-public-key $keypairName --name $keypairName --region $region --node-type m5.xlarge --node-volume-size 200 --kubeconfig=./kubeconfig.eks-fabric.yaml
 
 echo Check whether kubectl can access your Kubernetes cluster
 kubectl --kubeconfig=./kubeconfig.eks-fabric.yaml get nodes
