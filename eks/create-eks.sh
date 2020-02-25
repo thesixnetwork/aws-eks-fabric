@@ -57,18 +57,18 @@ echo Getting VPC and Subnets from eksctl
 VPCID=$(eksctl get cluster --name=eks-fabric --region $region --verbose=0 --output=json | jq  '.[0].ResourcesVpcConfig.VpcId' | tr -d '"')
 echo -e "VPCID: $VPCID"
 
-SUBNETS=$(eksctl get cluster --name=eks-fabric --region $region --verbose=0 --output=json | jq  '.[0].ResourcesVpcConfig.SubnetIds')
-SUBNETA=$(echo $SUBNETS | jq '.[0]' | tr -d '"')
-SUBNETB=$(echo $SUBNETS | jq '.[1]' | tr -d '"')
-SUBNETC=$(echo $SUBNETS | jq '.[2]' | tr -d '"')
-echo -e "SUBNETS: $SUBNETS"
-echo -e "SUBNETS: $SUBNETA, $SUBNETB, $SUBNETC"
+PUBLIC_SUBNETS=$(aws ec2 describe-subnets | jq ".Subnets[] | select(.VpcId == \"${VPCID}\") | select(.Tags[] | select(.Value | test(\"Public\"))) | .SubnetId" | uniq | tr "\n" " ")
+PUBLIC_SUBNET1=$(echo $PUBLIC_SUBNETS| cut -d" " -f1)
+PUBLIC_SUBNET2=$(echo $PUBLIC_SUBNETS| cut -d" " -f2)
+PUBLIC_SUBNET3=$(echo $PUBLIC_SUBNETS| cut -d" " -f3)
+echo -e "PUBLIC_SUBNETS: $PUBLIC_SUBNETS"
+echo -e "PUBLIC_SUBNETS: $PUBLIC_SUBNET1, $PUBLIC_SUBNET2, $PUBLIC_SUBNET3"
 
 cd ~/aws-eks-fabric
 git checkout efs/deploy-ec2.sh
 
 echo Update the ~/aws-eks-fabric/efs/deploy-ec2.sh config file
-sed -e "s/{VPCID}/${VPCID}/g" -e "s/{REGION}/${region}/g" -e "s/{SUBNETA}/${SUBNETA}/g" -e "s/{SUBNETB}/${SUBNETB}/g" -e "s/{SUBNETC}/${SUBNETC}/g" -e "s/{KEYPAIRNAME}/${keypairName}/g" -i ~/aws-eks-fabric/efs/deploy-ec2.sh
+sed -e "s/{VPCID}/${VPCID}/g" -e "s/{REGION}/${region}/g" -e "s/{SUBNETA}/${PUBLIC_SUBNET1}/g" -e "s/{SUBNETB}/${PUBLIC_SUBNET2}/g" -e "s/{SUBNETC}/${PUBLIC_SUBNET3}/g" -e "s/{KEYPAIRNAME}/${keypairName}/g" -i ~/aws-eks-fabric/efs/deploy-ec2.sh
 
 echo ~/aws-eks-fabric/efs/deploy-ec2.sh script has been updated with your parameters
 cat ~/aws-eks-fabric/efs/deploy-ec2.sh
