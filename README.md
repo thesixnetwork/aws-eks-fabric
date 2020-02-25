@@ -50,4 +50,83 @@ cd aws-eks-fabric
 ./eks/create-eks.sh
 ```
 
-Deploy EKS and Hyperledger Fabric
+Done creating EKS cluster with bastion EC2 instance.
+
+### Step 2: Install EFS utils on each Kubernetes worker node
+
+1. SSH to bastion EC2 instance, created from step 1.
+
+```bash
+ssh -i ~/${KEYPAIR_NAME} ec2-user@${BASTION_PUBLIC_DNS}
+```
+
+2. Then, ssh to Kubernetes worker nodes and execute command below in each nodes
+
+```bash
+ssh -i ~/${KEYPAIR_NAME} ec2-user@${EKS_NODES_PUBLIC_DNS}
+sudo yum install -y amazon-efs-utils
+```
+
+### Step 3: Copy kubeconfig and AWS config & credentials files
+
+Now SSH into the EC2 bastion instance created in Step 1:
+
+```bash
+ssh -i ~/${KEYPAIR_NAME} ec2-user@${BASTION_PUBLIC_DNS}
+```
+
+Copy the aws config & credentials files:
+
+```bash
+mkdir -p /home/ec2-user/.aws
+cd /home/ec2-user/.aws
+mv /home/ec2-user/config .
+mv /home/ec2-user/credentials .
+```
+
+Check that the AWS CLI works:
+
+```bash
+aws s3 ls
+```
+
+You may or may not see S3 buckets, but you shouldn't receive an error.
+
+Copy the kube config file:
+
+```bash
+mkdir -p /home/ec2-user/.kube
+cd /home/ec2-user/.kube
+mv /home/ec2-user/kubeconfig.eks-fabric.yaml  ./config
+```
+
+To check that this works execute:
+
+```bash
+kubectl get nodes
+```
+
+You should see the nodes belonging to your new K8s cluster. You may see more nodes, depending on the size of the Kubernetes
+cluster you created. If you are using EKS you will NOT see any master nodes:
+
+```bash
+$ kubectl get nodes
+NAME                                           STATUS   ROLES    AGE   VERSION
+ip-192-168-62-115.us-west-2.compute.internal   Ready    <none>   2d    v1.10.3
+ip-192-168-77-242.us-west-2.compute.internal   Ready    <none>   2d    v1.10.3
+```
+
+### Step 4: Create the main Hyperledger Fabric orderer network
+
+1. SSH or Go back to bastion EC2 instance, created from step 1.
+
+```bash
+ssh -i ~/${KEYPAIR_NAME} ec2-user@${BASTION_PUBLIC_DNS}
+```
+
+2. Clone this repository to bastion instance.
+
+```bash
+cd
+git clone https://github.com/thesixnetwork/aws-eks-fabric.git
+```
