@@ -29,26 +29,26 @@ kubectl logs deploy/join-channel -n org1
 kubectl logs deploy/peer1-org1 -n org1 -c peer1-org1
 
 
-cd hyperledger-on-kubernetes/
+cd aws-eks-fabric/
 git pull
 cd ..
-sudo cp hyperledger-on-kubernetes/scripts/* /opt/share/rca-scripts/
-kubectl delete -f hyperledger-on-kubernetes/k8s/fabric-deployment-setup-addorg-fabric-org1.yaml
-kubectl apply -f hyperledger-on-kubernetes/k8s/fabric-deployment-setup-addorg-fabric-org1.yaml
+sudo cp aws-eks-fabric/scripts/* /opt/share/rca-scripts/
+kubectl delete -f aws-eks-fabric/k8s/fabric-deployment-setup-addorg-fabric-org1.yaml
+kubectl apply -f aws-eks-fabric/k8s/fabric-deployment-setup-addorg-fabric-org1.yaml
 sleep 10
-kubectl delete -f hyperledger-on-kubernetes/k8s/fabric-deployment-sign-addorg-fabric-org2.yaml
-kubectl apply -f hyperledger-on-kubernetes/k8s/fabric-deployment-sign-addorg-fabric-org2.yaml
+kubectl delete -f aws-eks-fabric/k8s/fabric-deployment-sign-addorg-fabric-org2.yaml
+kubectl apply -f aws-eks-fabric/k8s/fabric-deployment-sign-addorg-fabric-org2.yaml
 kubectl get po -n org2
   
-cd /opt/share/hyperledger-on-kubernetes
+cd /opt/share/aws-eks-fabric
 git pull
 cd ..
-sudo cp hyperledger-on-kubernetes/scripts/* rca-scripts/
+sudo cp aws-eks-fabric/scripts/* rca-scripts/
 
 
-kubectl delete -f hyperledger-on-kubernetes/orderer/fabric-deployment-test-fabric.yaml
-sudo cp hyperledger-on-kubernetes/scripts/* rca-scripts/
-kubectl apply -f hyperledger-on-kubernetes/orderer/fabric-deployment-test-fabric.yaml
+kubectl delete -f aws-eks-fabric/orderer/fabric-deployment-test-fabric.yaml
+sudo cp aws-eks-fabric/scripts/* rca-scripts/
+kubectl apply -f aws-eks-fabric/orderer/fabric-deployment-test-fabric.yaml
 kubectl get po -n org1
 
 export FABRIC_CA_CLIENT_HOME=/data/orgs/org1/admin
@@ -127,7 +127,7 @@ peer channel update -f /data/org3_config_update_as_envelope.pb -c mychannel -o o
 
 ## Start the fabric network
 
-cd /opt/share/hyperledger-on-kubernetes
+cd /opt/share/aws-eks-fabric
 git pull
 cd ..
 cd /opt/share
@@ -142,115 +142,115 @@ mkdir rca-data
 mkdir rca-scripts
 mkdir orderer
 
-sudo cp hyperledger-on-kubernetes/scripts/* rca-scripts/
+sudo cp aws-eks-fabric/scripts/* rca-scripts/
 
-kubectl apply -f hyperledger-on-kubernetes/k8s/fabric-pvc-rca-scripts-org0.yaml
-kubectl apply -f hyperledger-on-kubernetes/k8s/fabric-pvc-rca-scripts-org1.yaml
-kubectl apply -f hyperledger-on-kubernetes/k8s/fabric-pvc-rca-scripts-org2.yaml
-kubectl apply -f hyperledger-on-kubernetes/k8s/fabric-pvc-rca-data-org0.yaml
-kubectl apply -f hyperledger-on-kubernetes/k8s/fabric-pvc-rca-data-org1.yaml
-kubectl apply -f hyperledger-on-kubernetes/k8s/fabric-pvc-rca-data-org2.yaml
-kubectl apply -f hyperledger-on-kubernetes/k8s/fabric-pvc-rca-org0.yaml
-kubectl apply -f hyperledger-on-kubernetes/k8s/fabric-pvc-rca-org1.yaml
-kubectl apply -f hyperledger-on-kubernetes/k8s/fabric-pvc-rca-org2.yaml
-kubectl apply -f hyperledger-on-kubernetes/k8s/fabric-pvc-ica-org0.yaml
-kubectl apply -f hyperledger-on-kubernetes/k8s/fabric-pvc-ica-org1.yaml
-kubectl apply -f hyperledger-on-kubernetes/k8s/fabric-pvc-ica-org2.yaml
-kubectl apply -f hyperledger-on-kubernetes/k8s/fabric-pvc-orderer-org0.yaml
+kubectl apply -f aws-eks-fabric/k8s/fabric-pvc-rca-scripts-org0.yaml
+kubectl apply -f aws-eks-fabric/k8s/fabric-pvc-rca-scripts-org1.yaml
+kubectl apply -f aws-eks-fabric/k8s/fabric-pvc-rca-scripts-org2.yaml
+kubectl apply -f aws-eks-fabric/k8s/fabric-pvc-rca-data-org0.yaml
+kubectl apply -f aws-eks-fabric/k8s/fabric-pvc-rca-data-org1.yaml
+kubectl apply -f aws-eks-fabric/k8s/fabric-pvc-rca-data-org2.yaml
+kubectl apply -f aws-eks-fabric/k8s/fabric-pvc-rca-org0.yaml
+kubectl apply -f aws-eks-fabric/k8s/fabric-pvc-rca-org1.yaml
+kubectl apply -f aws-eks-fabric/k8s/fabric-pvc-rca-org2.yaml
+kubectl apply -f aws-eks-fabric/k8s/fabric-pvc-ica-org0.yaml
+kubectl apply -f aws-eks-fabric/k8s/fabric-pvc-ica-org1.yaml
+kubectl apply -f aws-eks-fabric/k8s/fabric-pvc-ica-org2.yaml
+kubectl apply -f aws-eks-fabric/k8s/fabric-pvc-orderer-org0.yaml
 sleep 5
-kubectl apply -f hyperledger-on-kubernetes/k8s/fabric-deployment-rca-org0.yaml
-kubectl apply -f hyperledger-on-kubernetes/k8s/fabric-deployment-rca-org1.yaml
-kubectl apply -f hyperledger-on-kubernetes/k8s/fabric-deployment-rca-org2.yaml
+kubectl apply -f aws-eks-fabric/k8s/fabric-deployment-rca-org0.yaml
+kubectl apply -f aws-eks-fabric/k8s/fabric-deployment-rca-org1.yaml
+kubectl apply -f aws-eks-fabric/k8s/fabric-deployment-rca-org2.yaml
 #make sure the svc starts, otherwise subsequent commands may fail
 sleep 10
-kubectl apply -f hyperledger-on-kubernetes/k8s/fabric-deployment-ica-org0.yaml
-kubectl apply -f hyperledger-on-kubernetes/k8s/fabric-deployment-ica-org1.yaml
-kubectl apply -f hyperledger-on-kubernetes/k8s/fabric-deployment-ica-org2.yaml
+kubectl apply -f aws-eks-fabric/k8s/fabric-deployment-ica-org0.yaml
+kubectl apply -f aws-eks-fabric/k8s/fabric-deployment-ica-org1.yaml
+kubectl apply -f aws-eks-fabric/k8s/fabric-deployment-ica-org2.yaml
 sleep 10
-kubectl apply -f hyperledger-on-kubernetes/k8s/fabric-deployment-register-identities.yaml
-kubectl apply -f hyperledger-on-kubernetes/k8s/fabric-deployment-channel-artifacts.yaml
+kubectl apply -f aws-eks-fabric/k8s/fabric-deployment-register-identities.yaml
+kubectl apply -f aws-eks-fabric/k8s/fabric-deployment-channel-artifacts.yaml
 sleep 20
-kubectl apply -f hyperledger-on-kubernetes/k8s/fabric-deployment-orderer-org0.yaml
+kubectl apply -f aws-eks-fabric/k8s/fabric-deployment-orderer-org0.yaml
 sleep 10
 kubectl get po -n org0
-kubectl apply -f hyperledger-on-kubernetes/k8s/fabric-deployment-peer1-org1.yaml
-kubectl apply -f hyperledger-on-kubernetes/k8s/fabric-deployment-peer2-org1.yaml
-kubectl apply -f hyperledger-on-kubernetes/k8s/fabric-deployment-peer1-org2.yaml
-kubectl apply -f hyperledger-on-kubernetes/k8s/fabric-deployment-peer2-org2.yaml
+kubectl apply -f aws-eks-fabric/k8s/fabric-deployment-peer1-org1.yaml
+kubectl apply -f aws-eks-fabric/k8s/fabric-deployment-peer2-org1.yaml
+kubectl apply -f aws-eks-fabric/k8s/fabric-deployment-peer1-org2.yaml
+kubectl apply -f aws-eks-fabric/k8s/fabric-deployment-peer2-org2.yaml
 sleep 30
 kubectl get po -n org1
 kubectl get po -n org2
-kubectl apply -f hyperledger-on-kubernetes/k8s/fabric-deployment-test-fabric-abac.yaml
+kubectl apply -f aws-eks-fabric/k8s/fabric-deployment-test-fabric-abac.yaml
 sleep 5
-kubectl apply -f hyperledger-on-kubernetes/k8s/fabric-deployment-test-fabric-marbles.yaml
+kubectl apply -f aws-eks-fabric/k8s/fabric-deployment-test-fabric-marbles.yaml
 sleep 5
-kubectl apply -f hyperledger-on-kubernetes/k8s/fabric-deployment-test-fabric-marbles-workshop.yaml
+kubectl apply -f aws-eks-fabric/k8s/fabric-deployment-test-fabric-marbles-workshop.yaml
 
 ## Start the individual steps
 
-cd /opt/share/hyperledger-on-kubernetes
+cd /opt/share/aws-eks-fabric
 git pull
 cd ..
-sudo cp hyperledger-on-kubernetes/scripts/* rca-scripts/
+sudo cp aws-eks-fabric/scripts/* rca-scripts/
 
-kubectl delete -f hyperledger-on-kubernetes/k8s/fabric-deployment-create-channel.yaml
+kubectl delete -f aws-eks-fabric/k8s/fabric-deployment-create-channel.yaml
 sleep 10
-kubectl apply -f hyperledger-on-kubernetes/k8s/fabric-deployment-create-channel.yaml
+kubectl apply -f aws-eks-fabric/k8s/fabric-deployment-create-channel.yaml
 kubectl get po -n org1
 
 
 ## Cleanup
 cd /opt/share
 
-kubectl delete -f hyperledger-on-kubernetes/k8s/fabric-deployment-test-fabric-marbles.yaml
-kubectl delete -f hyperledger-on-kubernetes/k8s/fabric-deployment-test-fabric-marbles-workshop.yaml
-kubectl delete -f hyperledger-on-kubernetes/k8s/fabric-deployment-test-fabric-abac.yaml
-kubectl delete -f hyperledger-on-kubernetes/k8s/fabric-deployment-peer2-org2.yaml
-kubectl delete -f hyperledger-on-kubernetes/k8s/fabric-deployment-peer1-org2.yaml
-kubectl delete -f hyperledger-on-kubernetes/k8s/fabric-deployment-peer2-org1.yaml
-kubectl delete -f hyperledger-on-kubernetes/k8s/fabric-deployment-peer1-org1.yaml
-kubectl delete -f hyperledger-on-kubernetes/k8s/fabric-deployment-orderer1-org0.yaml
-kubectl delete -f hyperledger-on-kubernetes/k8s/fabric-deployment-orderer2-org0.yaml
-kubectl delete -f hyperledger-on-kubernetes/k8s/fabric-deployment-orderer3-org0.yaml
-kubectl delete -f hyperledger-on-kubernetes/k8s/fabric-deployment-register-orderer-org0.yaml
-kubectl delete -f hyperledger-on-kubernetes/k8s/fabric-deployment-register-peer-org1.yaml
-kubectl delete -f hyperledger-on-kubernetes/k8s/fabric-deployment-register-peer-org2.yaml
-kubectl delete -f hyperledger-on-kubernetes/k8s/fabric-deployment-register-org-org0.yaml
-kubectl delete -f hyperledger-on-kubernetes/k8s/fabric-deployment-register-org-org1.yaml
-kubectl delete -f hyperledger-on-kubernetes/k8s/fabric-deployment-register-org-org2.yaml
-kubectl delete -f hyperledger-on-kubernetes/k8s/fabric-deployment-channel-artifacts.yaml
-kubectl delete -f hyperledger-on-kubernetes/k8s/fabric-deployment-ica-org0.yaml
-kubectl delete -f hyperledger-on-kubernetes/k8s/fabric-deployment-ica-org1.yaml
-kubectl delete -f hyperledger-on-kubernetes/k8s/fabric-deployment-ica-org2.yaml
+kubectl delete -f aws-eks-fabric/k8s/fabric-deployment-test-fabric-marbles.yaml
+kubectl delete -f aws-eks-fabric/k8s/fabric-deployment-test-fabric-marbles-workshop.yaml
+kubectl delete -f aws-eks-fabric/k8s/fabric-deployment-test-fabric-abac.yaml
+kubectl delete -f aws-eks-fabric/k8s/fabric-deployment-peer2-org2.yaml
+kubectl delete -f aws-eks-fabric/k8s/fabric-deployment-peer1-org2.yaml
+kubectl delete -f aws-eks-fabric/k8s/fabric-deployment-peer2-org1.yaml
+kubectl delete -f aws-eks-fabric/k8s/fabric-deployment-peer1-org1.yaml
+kubectl delete -f aws-eks-fabric/k8s/fabric-deployment-orderer1-org0.yaml
+kubectl delete -f aws-eks-fabric/k8s/fabric-deployment-orderer2-org0.yaml
+kubectl delete -f aws-eks-fabric/k8s/fabric-deployment-orderer3-org0.yaml
+kubectl delete -f aws-eks-fabric/k8s/fabric-deployment-register-orderer-org0.yaml
+kubectl delete -f aws-eks-fabric/k8s/fabric-deployment-register-peer-org1.yaml
+kubectl delete -f aws-eks-fabric/k8s/fabric-deployment-register-peer-org2.yaml
+kubectl delete -f aws-eks-fabric/k8s/fabric-deployment-register-org-org0.yaml
+kubectl delete -f aws-eks-fabric/k8s/fabric-deployment-register-org-org1.yaml
+kubectl delete -f aws-eks-fabric/k8s/fabric-deployment-register-org-org2.yaml
+kubectl delete -f aws-eks-fabric/k8s/fabric-deployment-channel-artifacts.yaml
+kubectl delete -f aws-eks-fabric/k8s/fabric-deployment-ica-org0.yaml
+kubectl delete -f aws-eks-fabric/k8s/fabric-deployment-ica-org1.yaml
+kubectl delete -f aws-eks-fabric/k8s/fabric-deployment-ica-org2.yaml
 sleep 5
-kubectl delete -f hyperledger-on-kubernetes/k8s/fabric-deployment-rca-org0.yaml
-kubectl delete -f hyperledger-on-kubernetes/k8s/fabric-deployment-rca-org1.yaml
-kubectl delete -f hyperledger-on-kubernetes/k8s/fabric-deployment-rca-org2.yaml
+kubectl delete -f aws-eks-fabric/k8s/fabric-deployment-rca-org0.yaml
+kubectl delete -f aws-eks-fabric/k8s/fabric-deployment-rca-org1.yaml
+kubectl delete -f aws-eks-fabric/k8s/fabric-deployment-rca-org2.yaml
 sleep 5
-kubectl delete -f hyperledger-on-kubernetes/k8s/fabric-nlb-anchor-peer1-org1.yaml
-kubectl delete -f hyperledger-on-kubernetes/k8s/fabric-nlb-anchor-peer1-org2.yaml
-kubectl delete -f hyperledger-on-kubernetes/k8s/fabric-nlb-ca-org0.yaml
-kubectl delete -f hyperledger-on-kubernetes/k8s/fabric-nlb-ca-org1.yaml
-kubectl delete -f hyperledger-on-kubernetes/k8s/fabric-nlb-ca-org2.yaml
-kubectl delete -f hyperledger-on-kubernetes/k8s/fabric-nlb-notls-ca-org0.yaml
-kubectl delete -f hyperledger-on-kubernetes/k8s/fabric-nlb-notls-ca-org1.yaml
-kubectl delete -f hyperledger-on-kubernetes/k8s/fabric-nlb-notls-ca-org2.yaml
-kubectl delete -f hyperledger-on-kubernetes/k8s/fabric-nlb-orderer1-org0.yaml
-kubectl delete -f hyperledger-on-kubernetes/k8s/fabric-nlb-orderer2-org0.yaml
-kubectl delete -f hyperledger-on-kubernetes/k8s/fabric-nlb-orderer3-org0.yaml
-kubectl delete -f hyperledger-on-kubernetes/k8s/fabric-pvc-rca-scripts-org0.yaml
-kubectl delete -f hyperledger-on-kubernetes/k8s/fabric-pvc-rca-scripts-org1.yaml
-kubectl delete -f hyperledger-on-kubernetes/k8s/fabric-pvc-rca-scripts-org2.yaml
-kubectl delete -f hyperledger-on-kubernetes/k8s/fabric-pvc-rca-data-org0.yaml
-kubectl delete -f hyperledger-on-kubernetes/k8s/fabric-pvc-rca-data-org1.yaml
-kubectl delete -f hyperledger-on-kubernetes/k8s/fabric-pvc-rca-data-org2.yaml
-kubectl delete -f hyperledger-on-kubernetes/k8s/fabric-pvc-rca-org0.yaml
-kubectl delete -f hyperledger-on-kubernetes/k8s/fabric-pvc-rca-org1.yaml
-kubectl delete -f hyperledger-on-kubernetes/k8s/fabric-pvc-rca-org2.yaml
-kubectl delete -f hyperledger-on-kubernetes/k8s/fabric-pvc-ica-org0.yaml
-kubectl delete -f hyperledger-on-kubernetes/k8s/fabric-pvc-ica-org1.yaml
-kubectl delete -f hyperledger-on-kubernetes/k8s/fabric-pvc-ica-org2.yaml
-kubectl delete -f hyperledger-on-kubernetes/k8s/fabric-pvc-orderer-org0.yaml
+kubectl delete -f aws-eks-fabric/k8s/fabric-nlb-anchor-peer1-org1.yaml
+kubectl delete -f aws-eks-fabric/k8s/fabric-nlb-anchor-peer1-org2.yaml
+kubectl delete -f aws-eks-fabric/k8s/fabric-nlb-ca-org0.yaml
+kubectl delete -f aws-eks-fabric/k8s/fabric-nlb-ca-org1.yaml
+kubectl delete -f aws-eks-fabric/k8s/fabric-nlb-ca-org2.yaml
+kubectl delete -f aws-eks-fabric/k8s/fabric-nlb-notls-ca-org0.yaml
+kubectl delete -f aws-eks-fabric/k8s/fabric-nlb-notls-ca-org1.yaml
+kubectl delete -f aws-eks-fabric/k8s/fabric-nlb-notls-ca-org2.yaml
+kubectl delete -f aws-eks-fabric/k8s/fabric-nlb-orderer1-org0.yaml
+kubectl delete -f aws-eks-fabric/k8s/fabric-nlb-orderer2-org0.yaml
+kubectl delete -f aws-eks-fabric/k8s/fabric-nlb-orderer3-org0.yaml
+kubectl delete -f aws-eks-fabric/k8s/fabric-pvc-rca-scripts-org0.yaml
+kubectl delete -f aws-eks-fabric/k8s/fabric-pvc-rca-scripts-org1.yaml
+kubectl delete -f aws-eks-fabric/k8s/fabric-pvc-rca-scripts-org2.yaml
+kubectl delete -f aws-eks-fabric/k8s/fabric-pvc-rca-data-org0.yaml
+kubectl delete -f aws-eks-fabric/k8s/fabric-pvc-rca-data-org1.yaml
+kubectl delete -f aws-eks-fabric/k8s/fabric-pvc-rca-data-org2.yaml
+kubectl delete -f aws-eks-fabric/k8s/fabric-pvc-rca-org0.yaml
+kubectl delete -f aws-eks-fabric/k8s/fabric-pvc-rca-org1.yaml
+kubectl delete -f aws-eks-fabric/k8s/fabric-pvc-rca-org2.yaml
+kubectl delete -f aws-eks-fabric/k8s/fabric-pvc-ica-org0.yaml
+kubectl delete -f aws-eks-fabric/k8s/fabric-pvc-ica-org1.yaml
+kubectl delete -f aws-eks-fabric/k8s/fabric-pvc-ica-org2.yaml
+kubectl delete -f aws-eks-fabric/k8s/fabric-pvc-orderer-org0.yaml
 
 cd /opt/share
 
@@ -547,7 +547,7 @@ I fixed this by deleting the Kubernetes resources and rerunning the scripts, hop
 
 ```bash
 cd
-cd hyperledger-on-kubernetes
+cd aws-eks-fabric
 kubectl delete -f k8s/
 ```
 
@@ -621,15 +621,15 @@ sudo rm -rf /opt/share/rca-data/orgs/org0
 I delete the register deployment and run ./start-fabric.sh again.
 
 ```bash
-kubectl delete -f hyperledger-on-kubernetes/k8s/fabric-deployment-register-org-org0.yaml 
-kubectl delete -f hyperledger-on-kubernetes/k8s/fabric-deployment-register-orderer-org0.yaml 
+kubectl delete -f aws-eks-fabric/k8s/fabric-deployment-register-org-org0.yaml 
+kubectl delete -f aws-eks-fabric/k8s/fabric-deployment-register-orderer-org0.yaml 
 ```
 
 Then rerun fabric-start.sh:
 
 ```bash
 cd ~
-cd hyperledger-on-kubernetes/fabric-main
+cd aws-eks-fabric/fabric-main
 ./start-fabric.sh
 ```
 ##### Orderer pods not starting
@@ -643,9 +643,9 @@ cp: cannot stat '/data/orgs/org0/msp/admincerts/cert.pem': No such file or direc
 I follow the same steps as the issue above (it's the same issue). except I also delete and restart the orderers:
 
 ```bash
-kubectl delete -f hyperledger-on-kubernetes/k8s/fabric-deployment-orderer1-org0.yaml 
-kubectl delete -f hyperledger-on-kubernetes/k8s/fabric-deployment-orderer2-org0.yaml 
-kubectl delete -f hyperledger-on-kubernetes/k8s/fabric-deployment-orderer3-org0.yaml 
+kubectl delete -f aws-eks-fabric/k8s/fabric-deployment-orderer1-org0.yaml 
+kubectl delete -f aws-eks-fabric/k8s/fabric-deployment-orderer2-org0.yaml 
+kubectl delete -f aws-eks-fabric/k8s/fabric-deployment-orderer3-org0.yaml 
 ```
 
 

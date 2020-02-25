@@ -16,7 +16,7 @@
 # SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 EFSSERVER=fs-c9141a61.efs.us-west-2.amazonaws.com
-REPO=hyperledger-on-kubernetes
+REPO=aws-eks-fabric
 source $HOME/$REPO/fabric-main/gen-fabric-functions.sh
 DATA=/opt/share
 

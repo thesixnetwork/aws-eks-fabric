@@ -21,7 +21,7 @@ SDIR=$(dirname "$0")
 DATA=/opt/share
 SCRIPTS=$DATA/rca-scripts
 source $SCRIPTS/env.sh
-REPO=hyperledger-on-kubernetes
+REPO=aws-eks-fabric
 
 function main {
     log "Beginning setup of Hyperledger Fabric on Kubernetes ..."

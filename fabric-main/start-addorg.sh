@@ -134,7 +134,7 @@ source $SDIR/installchaincode.sh
 log "PEER_ORGS at start of addorg.sh: '$PEER_ORGS'"
 log "PEER_DOMAINS at start of addorg.sh: '$PEER_DOMAINS'"
 DATA=/opt/share/
-REPO=hyperledger-on-kubernetes
+REPO=aws-eks-fabric
 main
 
 

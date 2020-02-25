@@ -18,7 +18,7 @@
 DATA=/opt/share
 SCRIPTS=$DATA/rca-scripts
 source $SCRIPTS/env.sh
-REPO=hyperledger-on-kubernetes
+REPO=aws-eks-fabric
 
 function removeDirs {
     if [ $# -ne 1 ]; then

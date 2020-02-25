@@ -18,7 +18,7 @@
 SDIR=$(dirname "$0")
 REPO=https://github.com/Yolean/kubernetes-kafka.git
 REPODIR=kubernetes-kafka
-FABRICREPO=hyperledger-on-kubernetes
+FABRICREPO=aws-eks-fabric
 
 function main {
     echo "Stopping Kafka for Hyperledger Fabric on Kubernetes ..."

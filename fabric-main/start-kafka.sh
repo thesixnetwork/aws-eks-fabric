@@ -20,7 +20,7 @@ set -e
 SDIR=$(dirname "$0")
 REPO=https://github.com/Yolean/kubernetes-kafka.git
 REPODIR=kubernetes-kafka
-FABRICREPO=hyperledger-on-kubernetes
+FABRICREPO=aws-eks-fabric
 DATADIR=/opt/share/
 SCRIPTS=$DATADIR/rca-scripts
 

@@ -47,5 +47,5 @@ SCRIPTS=$DATA/rca-scripts
 source $SCRIPTS/env.sh
 source $SDIR/utilities.sh
 DATA=/opt/share/
-REPO=hyperledger-on-kubernetes
+REPO=aws-eks-fabric
 main

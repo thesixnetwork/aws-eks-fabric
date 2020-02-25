@@ -124,6 +124,6 @@ function stopInstallJobsFabric {
 
 DATA=/opt/share
 SCRIPTS=$DATA/rca-scripts
-REPO=hyperledger-on-kubernetes
+REPO=aws-eks-fabric
 source $SCRIPTS/env.sh
 source $HOME/$REPO/fabric-main/utilities.sh

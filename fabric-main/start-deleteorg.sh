@@ -112,7 +112,7 @@ source $SDIR/installchaincode.sh
 log "PEER_ORGS at start of deleteorg.sh: '$PEER_ORGS'"
 log "PEER_DOMAINS at start of deleteorg.sh: '$PEER_DOMAINS'"
 DATA=/opt/share/
-REPO=hyperledger-on-kubernetes
+REPO=aws-eks-fabric
 set +e
 main
 

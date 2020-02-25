@@ -19,7 +19,7 @@ SDIR=$(dirname "$0")
 DATA=/opt/share
 SCRIPTS=$DATA/rca-scripts
 source $SCRIPTS/env.sh
-REPO=hyperledger-on-kubernetes
+REPO=aws-eks-fabric
 source $HOME/$REPO/fabric-main/utilities.sh
 K8STEMPLATES=k8s-templates
 K8SYAML=k8s
