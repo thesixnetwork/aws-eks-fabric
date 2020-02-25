@@ -86,7 +86,7 @@ echo public DNS of EC2 bastion host: $PublicDnsNameBastion
 
 PrivateDnsNameEKSWorker=$(aws ec2 describe-instances --region $region --filters "Name=tag:Name,Values=eks-fabric-*-Node" "Name=instance-state-name,Values=running" | jq '.Reservations | .[] | .Instances | .[] | .PrivateDnsName' | tr -d '"')
 echo private DNS of EKS worker nodes, accessible from Bastion only since they are in a private subnet: $PrivateDnsNameEKSWorker
-if [ ! -f ~/${keypairName}.pem ]; then
+if [ -f ~/${keypairName}.pem ]; then
   cd ~
   scp -i ${keypairName}.pem -q ~/${keypairName}.pem  ec2-user@${PublicDnsNameBastion}:/home/ec2-user/${keypairName}.pem
 
