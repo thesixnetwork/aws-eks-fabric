@@ -75,6 +75,16 @@ Now SSH into the EC2 bastion instance created in Step 1:
 ssh -i ~/${KEYPAIR_NAME} ec2-user@${BASTION_PUBLIC_DNS}
 ```
 
+Update aws cli
+
+```bash
+curl -O https://bootstrap.pypa.io/get-pip.py
+python get-pip.py --user
+export PATH=~/.local/bin:$PATH
+source ~/.bash_profile
+pip install awscli --upgrade --user
+```
+
 Copy the aws config & credentials files:
 
 ```bash
