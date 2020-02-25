@@ -140,3 +140,30 @@ ssh -i ~/${KEYPAIR_NAME} ec2-user@${BASTION_PUBLIC_DNS}
 cd
 git clone https://github.com/thesixnetwork/aws-eks-fabric.git
 ```
+
+3. Edit env.sh
+
+```bash
+cd
+cd aws-eks-fabric/scripts
+vi env.sh
+```
+
+Change `org0` `org1` `org2` to your preferred name.
+
+4. Generate the Kubernetes YAML files
+
+```bash
+cd
+cd aws-eks-fabric
+mkdir /opt/share/rca-scripts
+cp scripts/* /opt/share/rca-scripts
+```
+
+then
+
+```bash
+cd
+cd aws-eks-fabric/fabric-main
+./gen-fabric.sh
+```
