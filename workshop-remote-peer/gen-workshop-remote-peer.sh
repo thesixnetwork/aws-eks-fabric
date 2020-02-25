@@ -15,51 +15,31 @@
 # OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 # SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-EFSSERVER=fs-a8560ae9.efs.ap-southeast-1.amazonaws.com
-REPO=aws-eks-fabric
+EFSSERVER=fs-99a736d1.efs.us-east-1.amazonaws.com
+REPO=hyperledger-on-kubernetes
+DATA=/opt/share
+SCRIPTS=$DATA/rca-scripts
+source $SCRIPTS/env.sh
+source $HOME/$REPO/fabric-main/utilities.sh
 source $HOME/$REPO/fabric-main/gen-fabric-functions.sh
+K8SYAML=k8s
 DATA=/opt/share
 
 function main {
-    log "Beginning creation of Hyperledger Fabric Kubernetes YAML files..."
+    log "Beginning creation of Hyperledger Fabric Kubernetes YAML files for workshop..."
     cd $HOME/$REPO
-#    rm -rf $K8SYAML
+    rm -rf $K8SYAML
     mkdir -p $K8SYAML
-    file=${DATA}/rca-data/updateorg
-    if [ -f "$file" ]; then
-       NEW_ORG=$(cat $file)
-       echo "File '$file' exists - gen_fabric.sh identifies a new org '$NEW_ORG', and will generate appropriate K8s YAML files"
-    fi
     genFabricOrgs
     genNamespaces
     genPVC
     genRCA
     genICA
     genRegisterOrg
-    genRegisterOrderer
     genRegisterPeers
-    genChannelArtifacts
-    genOrderer
-    genPeers
-    genRemotePeers
     genWorkshopRemotePeers
-    genPeerJoinChannel
-    genFabricTest
-    genFabricTestMarbles
-    genInstallMarblesCC
-    genLoadFabric
-    genLoadFabricMarbles
-    genAddOrg
-    genSignAddOrg
-    genUpdateConfAddOrg
-    genJoinAddOrg
-    genInstallCCAddOrg
-    genUpgradeCCAddOrg
-    genTestCCAddOrg
     genFabricTestMarblesWorkshop
-    genDeleteOrg
-    genCLI
-    log "Creation of Hyperledger Fabric Kubernetes YAML files complete"
+    log "Creation of Hyperledger Fabric Kubernetes YAML files for workshop complete"
 }
 
 main

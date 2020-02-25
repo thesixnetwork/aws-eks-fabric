@@ -151,18 +151,22 @@ vi env.sh
 
 Change `org0` `org1` `org2` to your preferred name.
 
-4. Generate the Kubernetes YAML files
+4. Config EFS endpoint.
+
+```bash
+vi ~/aws-eks-fabric/fabric-main/gen-fabric.sh
+vi ~/aws-eks-fabric/workshop-remote-peer/gen-workshop-remote-peer.sh
+```
+
+You can find the full EFS server URL in the AWS EFS console. The URL should look something like this: EFSSERVER=fs-12a33ebb.efs.us-west-2.amazonaws.com
+
+5. Generate the Kubernetes YAML files
 
 ```bash
 cd
 cd aws-eks-fabric
 mkdir /opt/share/rca-scripts
 cp scripts/* /opt/share/rca-scripts
-```
-
-then
-
-```bash
 cd
 cd aws-eks-fabric/fabric-main
 ./gen-fabric.sh
