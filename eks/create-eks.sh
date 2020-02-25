@@ -35,11 +35,9 @@ aws ec2 describe-key-pairs --key-names $keypairName | grep $keypairName
 if [[ $? -eq 1 ]]; then
   echo "Keypair does not exists, try creating one"
   cd ~
-  if [ ! -f ~/${keypairName}.pem ]; then
-    aws ec2 create-key-pair --key-name $keypairName --region $region --query 'KeyMaterial' --output text > ${keypairName}.pem
-    chmod 400 ~/${keypairName}.pem
-    sleep 10
-  fi
+  aws ec2 create-key-pair --key-name $keypairName --region $region --query 'KeyMaterial' --output text > ${keypairName}.pem
+  chmod 400 ~/${keypairName}.pem
+  sleep 10
 fi
 
 
