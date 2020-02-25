@@ -126,7 +126,7 @@ ip-192-168-62-115.us-west-2.compute.internal   Ready    <none>   2d    v1.10.3
 ip-192-168-77-242.us-west-2.compute.internal   Ready    <none>   2d    v1.10.3
 ```
 
-### Step 4: Create the main Hyperledger Fabric orderer network
+### Step 5: Create the main Hyperledger Fabric orderer network
 
 1. SSH or Go back to bastion EC2 instance, created from step 1.
 
