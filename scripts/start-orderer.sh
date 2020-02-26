@@ -33,6 +33,7 @@ apt-get install build-essential -y
 log "(YAWN) 5"
 sleep 5
 log "go get -u github.com/hyperledger/fabric-ca/cmd/..."
+log $(go version)
 go get -u github.com/hyperledger/fabric-ca/cmd/...
 log "(YAWN) 10"
 sleep 10
