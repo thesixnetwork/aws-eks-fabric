@@ -10,6 +10,7 @@ set -e
 
 source $(dirname "$0")/env.sh
 
+log "Custom script is running"
 log "Preparing to start orderer host '$ORDERER_HOST:$ORDERER_PORT', enrolled via '$ENROLLMENT_URL' with MSP at '$ORDERER_GENERAL_LOCALMSPDIR'"
 
 # Install fabric-ca. Recent version of Hyperledger Fabric do not include a fabric-ca-tools, fabric-ca-peer, etc., where the
@@ -24,14 +25,19 @@ export GOROOT=/usr/local/go
 export GOPATH=$HOME/go
 export PATH=$GOROOT/bin:$PATH
 export PATH=$PATH:$HOME/go/src/github.com/hyperledger/fabric-ca/bin
+log "Update dependency"
 apt-get update
 apt-get install git-core -y
 apt-get install libtool libltdl-dev -y
 apt-get install build-essential -y
+log "(YAWN) 5"
 sleep 5
+log "go get -u github.com/hyperledger/fabric-ca/cmd/..."
 go get -u github.com/hyperledger/fabric-ca/cmd/...
+log "(YAWN) 10"
 sleep 10
 cd $HOME/go/src/github.com/hyperledger/fabric-ca
+log "Making fabric-ca-client"
 make fabric-ca-client
 sleep 5
 export PATH=$PATH:$HOME/go/src/github.com/hyperledger/fabric-ca/bin
