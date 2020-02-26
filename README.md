@@ -171,3 +171,12 @@ cd
 cd aws-eks-fabric/fabric-main
 ./gen-fabric.sh
 ```
+6. Start Fabric Network
+
+```bash
+cd
+cd aws-eks-fabric/fabric-main
+./start-fabric.sh
+```
+
+
