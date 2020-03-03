@@ -37,7 +37,7 @@ function main {
 
 DATADIR=/opt/share/
 SCRIPTS=$DATADIR/rca-scripts
-REPO=hyperledger-on-kubernetes
+REPO=aws-eks-fabric
 source $SCRIPTS/env.sh
 source $HOME/$REPO/fabric-main/signorgconfig.sh
 main

@@ -39,7 +39,7 @@ function main {
 SDIR=$(dirname "$0")
 DATADIR=/opt/share/
 SCRIPTS=$DATADIR/rca-scripts
-REPO=hyperledger-on-kubernetes
+REPO=aws-eks-fabric
 main
 
 # create a temp file. The scripts/addorg* shell scripts will check for files; if they find them

@@ -11,7 +11,7 @@ instantiated and tested. Now you'll need to copy the crypto material to S3. Here
     
         ```bash
         cd
-        cd hyperledger-on-kubernetes/
+        cd aws-eks-fabric/
         vi workshop-remote-peer/facilitator/copy-crypto-to-S3.sh
         ```
         * region - the region where you have installed EKS

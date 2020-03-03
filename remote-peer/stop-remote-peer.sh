@@ -38,7 +38,7 @@ function main {
 SDIR=$(dirname "$0")
 DATA=/opt/share/
 SCRIPTS=$DATA/rca-scripts
-REPO=hyperledger-on-kubernetes
+REPO=aws-eks-fabric
 cd $HOME/$REPO
 source $SCRIPTS/env.sh
 source fabric-main/utilities.sh

@@ -16,7 +16,7 @@
 # SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 EFSSERVER=fs-99a736d1.efs.us-east-1.amazonaws.com
-REPO=hyperledger-on-kubernetes
+REPO=aws-eks-fabric
 DATA=/opt/share
 SCRIPTS=$DATA/rca-scripts
 source $SCRIPTS/env.sh

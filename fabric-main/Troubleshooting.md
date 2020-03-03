@@ -252,6 +252,20 @@ kubectl delete -f aws-eks-fabric/k8s/fabric-pvc-ica-org1.yaml
 kubectl delete -f aws-eks-fabric/k8s/fabric-pvc-ica-org2.yaml
 kubectl delete -f aws-eks-fabric/k8s/fabric-pvc-orderer-org0.yaml
 
+kubectl delete statefulsets kafka --namespace kafka
+kubectl delete statefulsets pzoo --namespace kafka
+kubectl delete statefulsets zoo --namespace kafka
+kubectl delete services bootstrap --namespace kafka
+kubectl delete services broker --namespace kafka
+kubectl delete services external-broker --namespace kafka
+kubectl delete services pzoo --namespace kafka
+kubectl delete services zoo --namespace kafka
+kubectl delete services zookeeper --namespace kafka
+
+
+
+
+
 cd /opt/share
 
 sudo rm -rf rca-org0/*

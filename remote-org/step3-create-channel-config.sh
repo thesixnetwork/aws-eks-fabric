@@ -85,7 +85,7 @@ ${NEW_ORG}
 EOF
 
 SCRIPTS=$DATADIR/rca-scripts
-REPO=hyperledger-on-kubernetes
+REPO=aws-eks-fabric
 source $HOME/$REPO/fabric-main/gen-env-file.sh
 genNewEnvAddOrg $NEW_ORG $NEW_DOMAIN $SCRIPTS
 sudo cp $SCRIPTS/envaddorgs.sh $SCRIPTS/env.sh

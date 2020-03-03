@@ -42,7 +42,7 @@ function main {
 SDIR=$(dirname "$0")
 DATADIR=/opt/share/
 SCRIPTS=$DATADIR/rca-scripts
-REPO=hyperledger-on-kubernetes
+REPO=aws-eks-fabric
 MERGEFILE=remote-org/scripts/env-remote-org.sh
 main
 
