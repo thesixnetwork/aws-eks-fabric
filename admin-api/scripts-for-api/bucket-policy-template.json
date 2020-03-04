@@ -1,0 +1,44 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "GetBucketLocation permissions",
+            "Effect": "Allow",
+            "Principal": {
+                "AWS": "arn:aws:iam::%account%:root"
+            },
+            "Action": [
+                "s3:GetBucketLocation"
+            ],
+            "Resource": [
+                "arn:aws:s3:::%bucket%"
+            ]
+        },
+        {
+            "Sid": "GetObject permissions",
+            "Effect": "Allow",
+            "Principal": {
+                "AWS": "arn:aws:iam::%account%:root"
+            },
+            "Action": [
+                "s3:GetObject"
+            ],
+            "Resource": [
+                "arn:aws:s3:::%bucket%/%org%/*"
+            ]
+        },
+        {
+            "Sid": "ListBucket permissions",
+            "Effect": "Allow",
+            "Principal": {
+                "AWS": "arn:aws:iam::%account%:root"
+            },
+            "Action": [
+                "s3:ListBucket"
+            ],
+            "Resource": [
+                "arn:aws:s3:::%bucket%"
+            ]
+        }
+    ]
+}

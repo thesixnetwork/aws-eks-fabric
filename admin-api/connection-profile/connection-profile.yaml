@@ -1,0 +1,74 @@
+name: "fabric"
+x-type: "hlfv1"
+description: "Fabric Network"
+version: "1.0"
+
+channels:
+  mychannel:
+    orderers:
+      - orderer2-org0.org0
+    peers:
+      peer1-org1.org1:
+        endorsingPeer: true
+        chaincodeQuery: true
+        ledgerQuery: true
+        eventSource: true
+      peer1-org2.org2:
+        endorsingPeer: true
+        chaincodeQuery: true
+        ledgerQuery: true
+        eventSource: true
+
+organizations:
+  org1:
+    mspid: org1MSP
+    peers:
+      - peer1-org1.org1
+    certificateAuthorities:
+      - ca-org1
+  org2:
+    mspid: org2MSP
+    peers:
+      - peer1-org2.org2
+    certificateAuthorities:
+      - ca-org2
+
+orderers:
+  orderer2-org0.org0:
+    url: grpcs://add8f99fc4af211e9a8db0a7e6a08c30-c454ad959b0fc86d.elb.us-west-2.amazonaws.com:7050
+    tlsCACerts:
+      path: /opt/share/rca-data/org0-ca-chain.pem
+
+peers:
+  peer1-org1.org1:
+    url: grpcs://aeae36c194af211e9a8db0a7e6a08c30-4b07f64b769e9db7.elb.us-west-2.amazonaws.com:7051
+    eventUrl: grpcs://aeae36c194af211e9a8db0a7e6a08c30-4b07f64b769e9db7.elb.us-west-2.amazonaws.com:7052
+    tlsCACerts:
+      path: /opt/share/rca-data/org1-ca-chain.pem
+  peer1-org2.org2:
+    url: grpcs://aeb06529c4af211e9b6da067721000cf-dde1c1dc27a7cf65.elb.us-west-2.amazonaws.com:7051
+    eventUrl: grpcs://aeb06529c4af211e9b6da067721000cf-dde1c1dc27a7cf65.elb.us-west-2.amazonaws.com:7052
+    tlsCACerts:
+      path: /opt/share/rca-data/org2-ca-chain.pem
+
+certificateAuthorities:
+  ca-org1:
+    url: https://a9652e7504b6a11e9a8db0a7e6a08c30-6674ce3a356ef727.elb.us-west-2.amazonaws.com:7054
+    httpOptions:
+      verify: false
+    tlsCACerts:
+      path: /opt/share/rca-data/org1-ca-chain.pem
+    registrar:
+      - enrollId: admin-org1
+        enrollSecret: admin-org1pw
+    caName: ica-org1.org1
+  ca-org2:
+    url: https://a96836b0c4b6a11e9b6da067721000cf-892744a4c29326f8.elb.us-west-2.amazonaws.com:7054
+    httpOptions:
+      verify: false
+    tlsCACerts:
+      path: /opt/share/rca-data/org2-ca-chain.pem
+    registrar:
+      - enrollId: admin-org2
+        enrollSecret: admin-org2pw
+    caName: ica-org2.org2

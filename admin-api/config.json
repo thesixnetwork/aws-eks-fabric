@@ -1,0 +1,16 @@
+{
+    "host":"localhost",
+    "port":"3000",
+    "channelName":"mychannel",
+    "chaincodeName":"marblescc",
+    "eventWaitTime":"30000",
+    "hfc-logging": "{'debug':'console', 'info':'console'}",
+    "datapath": "/opt/share/rca-data/",
+    "configtxfile": "configtx.yaml",
+    "scriptpath": "/opt/share/rca-scripts/",
+    "envfile": "env.sh",
+    "peers":[
+        "peer1-org1.org1",
+        "peer1-org2.org2"
+    ]
+ }
