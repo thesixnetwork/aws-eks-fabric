@@ -16,8 +16,8 @@ log "Preparing to start peer '$CORE_PEER_ID', host '$PEER_HOST', enrolled via '$
 # fabric-ca-client is included. So we will need to build fabric-ca-client ourselves.
 log "Installing fabric-ca-client"
 
-wget https://dl.google.com/go/go1.10.3.linux-amd64.tar.gz
-tar -xzf go1.10.3.linux-amd64.tar.gz
+wget https://dl.google.com/go/go1.14.linux-amd64.tar.gz
+tar -xzf go1.14.linux-amd64.tar.gz
 mv go /usr/local
 sleep 5
 export GOROOT=/usr/local/go
