@@ -236,3 +236,23 @@ kubectl delete -f aws-eks-fabric/k8s/fabric-deployment-register-orderer-org0.yam
 Then rerun fabric-start.sh:
 
 ```bash
+cd ~
+cd aws-eks-fabric/fabric-main
+./start-fabric.sh
+```
+##### Orderer pods not starting
+
+A 'kubectl logs' on the orderer shows this:
+
+```bash
+##### 2019-03-20 09:43:24 copyAdminCert - copying '/data/orgs/org0/msp/admincerts/cert.pem' to '/etc/hyperledger/orderer/msp/admincerts'
+cp: cannot stat '/data/orgs/org0/msp/admincerts/cert.pem': No such file or directory
+```
+I follow the same steps as the issue above (it's the same issue). except I also delete and restart the orderers:
+
+```bash
+kubectl delete -f aws-eks-fabric/k8s/fabric-deployment-orderer1-org0.yaml 
+kubectl delete -f aws-eks-fabric/k8s/fabric-deployment-orderer2-org0.yaml 
+kubectl delete -f aws-eks-fabric/k8s/fabric-deployment-orderer3-org0.yaml 
+```
+
