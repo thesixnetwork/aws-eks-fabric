@@ -179,6 +179,13 @@ cd aws-eks-fabric/fabric-main
 ./start-fabric.sh
 ```
 
+7. Check if network is successfully start
+
+```bash
+kubectl get pods --all-namespaces
+
+```
+
 # Troubleshooting
 
 ##### Could not generate genesis block
