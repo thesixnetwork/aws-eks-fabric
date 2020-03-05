@@ -256,3 +256,7 @@ kubectl delete -f aws-eks-fabric/k8s/fabric-deployment-orderer2-org0.yaml
 kubectl delete -f aws-eks-fabric/k8s/fabric-deployment-orderer3-org0.yaml 
 ```
 
+# More contents
+
+deploy or update chaincode : https://github.com/thesixnetwork/aws-eks-fabric/wiki/Deploy-chaincode
+
