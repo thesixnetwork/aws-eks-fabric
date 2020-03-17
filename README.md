@@ -186,7 +186,9 @@ kubectl get pods --all-namespaces
 
 ```
 
-8. Start an ElasticSearch cluster manually
+### Step 6: Start an Elasticsearch
+
+1. Start an ElasticSearch cluster manually
 
 - Select all Public subnets created from previous steps.
 - Select same security group as EKS node groups `(eks-cluster-sg)`
@@ -208,11 +210,11 @@ kubectl get pods --all-namespaces
 }
 ```
 
-9. Config security group as EKS node groups to allow connection from Bastion instance `(ec2-cmd-client-InstanceSecurityGroup)`
+2. Config security group as EKS node groups to allow connection from Bastion instance `(ec2-cmd-client-InstanceSecurityGroup)`
 
 - Add allow connection from bastion security group `(ec2-cmd-client-InstanceSecurityGroup)` to EKS node group securiyy group `(eks-cluster-sg)`
  
-10. Try testing telnet from Bastion instance to ElasticSearch cluster to verify that ElasticSearch can now be access from Bastion host.
+3. Try testing telnet from Bastion instance to ElasticSearch cluster to verify that ElasticSearch can now be access from Bastion host.
 
 ```bash
 $ telnet vpc-fabric-es-gqja2jmx6ojsjx3aokuimgjzq4.ap-southeast-1.es.amazonaws.com 80
@@ -222,13 +224,15 @@ Escape character is '^]'.
 Connection closed by foreign host.
 ```
 
-11. SSH to Bastion instance and install Nginx. (In case we want to use it as a proxy for ElasticSearch)
+### Step 7: Install Logstash on Bastion
+
+1. SSH to Bastion instance and install Nginx. (In case we want to use it as a proxy for ElasticSearch)
 
 ```bash
 yum install nginx
 ```
 
-12. SSH to Bastion instance and install Logstash for syncing log from Hyperledger Fabric to ElasticSearch
+2. SSH to Bastion instance and install Logstash for syncing log from Hyperledger Fabric to ElasticSearch
 
 Execute command below to retrieve Elastic's public key
 
@@ -266,7 +270,6 @@ Install
 ```bash
 sudo yum install logstash
 ```
-
 
 # Troubleshooting
 
