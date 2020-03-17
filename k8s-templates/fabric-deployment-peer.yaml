@@ -157,3 +157,8 @@ spec:
      port: 7052
      targetPort: 7052
      nodePort: %PORTCHAIN%
+   - name: endpoint-couchdb
+     protocol: TCP
+     port: 5984
+     targetPort: 5984
+     nodePort: %PORTCOUCH%
