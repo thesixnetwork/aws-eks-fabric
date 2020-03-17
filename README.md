@@ -186,6 +186,88 @@ kubectl get pods --all-namespaces
 
 ```
 
+8. Start an ElasticSearch cluster manually
+
+- Select all Public subnets created from previous steps.
+- Select same security group as EKS node groups `(eks-cluster-sg)`
+- Select an access policies to `JSON defined access policy`
+
+```json
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Principal": {
+        "AWS": "*"
+      },
+      "Action": "es:*",
+      "Resource": "arn:aws:es:ap-southeast-1:082007557883:domain/fabric-es/*"
+    }
+  ]
+}
+```
+
+9. Config security group as EKS node groups to allow connection from Bastion instance `(ec2-cmd-client-InstanceSecurityGroup)`
+
+- Add allow connection from bastion security group `(ec2-cmd-client-InstanceSecurityGroup)` to EKS node group securiyy group `(eks-cluster-sg)`
+ 
+10. Try testing telnet from Bastion instance to ElasticSearch cluster to verify that ElasticSearch can now be access from Bastion host.
+
+```bash
+$ telnet vpc-fabric-es-gqja2jmx6ojsjx3aokuimgjzq4.ap-southeast-1.es.amazonaws.com 80
+Trying 192.168.59.103...
+Connected to vpc-fabric-es-gqja2jmx6ojsjx3aokuimgjzq4.ap-southeast-1.es.amazonaws.com.
+Escape character is '^]'.
+Connection closed by foreign host.
+```
+
+11. SSH to Bastion instance and install Nginx. (In case we want to use it as a proxy for ElasticSearch)
+
+```bash
+yum install nginx
+```
+
+12. SSH to Bastion instance and install Logstash for syncing log from Hyperledger Fabric to ElasticSearch
+
+Execute command below to retrieve Elastic's public key
+
+```bash
+rpm -import https://artifacts.elastic.co/GPG-KEY-elasticsearch
+```
+
+Install Java8
+
+```bash
+sudo yum install java-1.8.0-openjdk
+```
+
+Make java8 default
+
+```bash
+alternatives --config java
+```
+
+Then, create `logstash.repo` to `/etc/yum.repos.d/`
+
+```bash
+echo "[logstash-6.x]
+name=Elastic repository for 6.x packages
+baseurl=https://artifacts.elastic.co/packages/6.x/yum
+gpgcheck=1
+gpgkey=https://artifacts.elastic.co/GPG-KEY-elasticsearch
+enabled=1
+autorefresh=1
+type=rpm-md" >> /etc/yum.repos.d/logstash.repo
+```
+
+Install
+
+```bash
+sudo yum install logstash
+```
+
+
 # Troubleshooting
 
 ##### Could not generate genesis block
