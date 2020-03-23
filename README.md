@@ -271,6 +271,13 @@ Install
 sudo yum install logstash
 ```
 
+Install logstash plugin for CouchDB
+
+```bash
+sudo /usr/share/logstash/bin/logstash-plugin install logstash-input-couchdb_changes
+sudo /usr/share/logstash/bin/logstash-plugin install logstash-output-sqs
+```
+
 # Troubleshooting
 
 ##### Could not generate genesis block
