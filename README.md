@@ -278,6 +278,75 @@ sudo /usr/share/logstash/bin/logstash-plugin install logstash-input-couchdb_chan
 sudo /usr/share/logstash/bin/logstash-plugin install logstash-output-sqs
 ```
 
+### Step 8: Create SQS
+
+Create an sqs name `hyperledger-logstash`
+
+### Step 9: Config and start logstash
+
+1. Create IAM user for pushing SQS message from logstash
+
+- Go to IAM page
+- Create user
+- username = `hyperledger-logstash-sqs-pusher`
+- accesss_type = `Programmatic access`
+- Attach `AmazonSQSFullAccess` policy
+- Save `Access key ID` and `Secret access key`
+
+2. SSH to Bastion instance and go to logstash config directory
+
+Create a conf file at `/etc/logstash/conf.d/org1.conf`
+
+```
+input {
+  couchdb_changes {
+    host => "a0cb0649b682c11ea9e1a0affb936c25-02db3289a4dbf536.elb.ap-southeast-1.amazonaws.com"
+    port => 5984
+    db => "mychannel_echo_asset"
+    keep_id => true
+    sequence_path => "/tmp/.couchdb_org1_seq_echo"
+  }
+}
+
+output {
+  sqs {
+    queue => "hyperledger-logstash"
+    region => "ap-southeast-1"
+    access_key_id => "XXXXXX"
+    secret_access_key => "XXXXXX"
+  }
+}
+```
+
+Create a conf file at `/etc/logstash/conf.d/org2.conf`
+
+```
+input {
+  couchdb_changes {
+    host => "a0dbbc44f682c11ea867a068e8cf007c-32b2b87d31bb53a8.elb.ap-southeast-1.amazonaws.com"
+    port => 5984
+    db => "mychannel_echo_asset"
+    keep_id => true
+    sequence_path => "/tmp/.couchdb_org2_seq_echo"
+  }
+}
+
+output {
+  sqs {
+    queue => "hyperledger-logstash"
+    region => "ap-southeast-1"
+    access_key_id => "XXXXXX"
+    secret_access_key => "XXXXXX"
+  }
+}
+```
+
+Then, start logstash
+
+```bash
+initctl restart logstash
+```
+
 # Troubleshooting
 
 ##### Could not generate genesis block
