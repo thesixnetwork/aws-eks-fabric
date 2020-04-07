@@ -42,7 +42,7 @@ fi
 
 
 cd ~
-eksctl create cluster --node-private-networking --ssh-access --ssh-public-key $keypairName --name eks-fabric --region $region --node-type t2.small --node-volume-size 20 --kubeconfig=./kubeconfig.eks-fabric.yaml
+eksctl create cluster --node-private-networking --ssh-access --ssh-public-key $keypairName --name eks-fabric --region $region --node-type t2.medium --node-volume-size 20 --kubeconfig=./kubeconfig.eks-fabric.yaml
 
 echo Check whether kubectl can access your Kubernetes cluster
 kubectl --kubeconfig=./kubeconfig.eks-fabric.yaml get nodes
