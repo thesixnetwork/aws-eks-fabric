@@ -22,7 +22,7 @@ Parameters:
   InstanceType:
     Description: WebServer EC2 instance type
     Type: String
-    Default: m4.large
+    Default: t2.micro
     AllowedValues:
     - t1.micro
     - t2.micro
